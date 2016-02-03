@@ -30,7 +30,7 @@
       var random2 = min + Math.ceil(Math.random() * (max - min));
 
       if (askQuestion(random1, random2, i+1, count)) {
-          correct++;
+        correct++;
       } else {
         incorrect.push("" + random1 + " * " + random2 + " is " + (random1 * random2));
       }
@@ -43,7 +43,7 @@
     $('#quiz_result_total_questions_count').val(i);
     $('#quiz_result_correct_answers_count').val(correct);
     $('#quiz_result_time_taken_in_seconds').val(totalTime);
-    $('#quiz_result_incorrect_answers').val(incorrect);
+    $('#quiz_result_incorrect_answers').val(incorrect.join('\n'));
     $('#new_quiz_result').submit();
   }
 </script>

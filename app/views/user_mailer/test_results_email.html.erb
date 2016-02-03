@@ -1,0 +1,23 @@
+<p>
+Hello, your results were just fine!
+</p>
+
+<p>
+You have answered <%= @quiz_result.correct_answers_count %> out of <%= @quiz_result.total_questions_count %> questions correctly in <%= @quiz_result.time_taken_in_seconds %> seconds.
+</p>
+
+<% if @quiz_result.incorrect_answers.present? %>
+<p>
+  **Your incorrect answers**
+</p>
+
+  <%= simple_format @quiz_result.incorrect_answers %>
+<% end %>
+
+<p>
+<% if @quiz_result.score_is_good? %>
+  You rock!
+<% else %>
+  You should become better in math
+<% end %>
+</p>
