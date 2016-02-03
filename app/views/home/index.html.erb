@@ -48,22 +48,26 @@
   }
 </script>
 
-<form class="form">
-<div class="form-group">
-  <label>Problems count</label>
-  <input class="form-control" type="text" id="count" value="3">
-</div>
-<div class="form-group">
-  <label>Min</label>
-  <input class="form-control" type="text" id="min" value="1">
-</div>
-<div class="form-group">
-  <label>Max</label>
-  <input class="form-control" type="text" id="max" value="9">
-</div>
-</form>
+<% if current_user %>
+	<form class="form">
+	<div class="form-group">
+	  <label>Problems count</label>
+	  <input class="form-control" type="text" id="count" value="3">
+	</div>
+	<div class="form-group">
+	  <label>Min</label>
+	  <input class="form-control" type="text" id="min" value="1">
+	</div>
+	<div class="form-group">
+	  <label>Max</label>
+	  <input class="form-control" type="text" id="max" value="9">
+	</div>
+	</form>
 
-<button onclick="start()" class="btn btn-primary">Start</button>
+	<button onclick="start()" class="btn btn-primary">Start</button>
+<% else %>
+	<%= link_to "Please login to start a test", new_user_session_path %>
+<% end %>
 
 <div style="display: none;">
 <%= form_for(QuizResult.new) do |f| %>
