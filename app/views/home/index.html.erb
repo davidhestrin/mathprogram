@@ -1,4 +1,80 @@
-<h1> Hello <%= @name %> </h1>
+<script>
+  function askQuestion(random1, random2, problemNumber, totalProblems, retry) {
+    var result = random1 * random2;
+    var question = "" + problemNumber + "/" + totalProblems + ": " + random1 +
+      " * " + random2 + " ?";
+    if (retry) {
+      question = "Please retry " + question;
+    }
+    var answer = prompt(question);
+    if (answer == result) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-<% a = 2 %>
-Hello <%= a %>
+  function start() {
+    // var username = prompt("What is your username?");
+    var count = $('#count').val();
+    var min = +$('#min').val();
+    var max = +$('#max').val();
+
+    var start = new Date();
+
+    var correct = 0;
+    var incorrect = [];
+
+    for(var i = 0; i < +count; ++i) {
+      var random1 = min + Math.ceil(Math.random() * (max - min));
+      var random2 = min + Math.ceil(Math.random() * (max - min));
+
+      if (askQuestion(random1, random2, i+1, count)) {
+          correct++;
+      } else {
+        incorrect.push("" + random1 + " * " + random2 + " is " + (random1 * random2));
+      }
+    }
+
+    var finish = new Date();
+    var totalTime = Math.round((finish - start) / 1000);
+    alert("It took you " + totalTime + "seconds to complete all the problems!");
+
+    $('#quiz_result_total_questions_count').val(i);
+    $('#quiz_result_correct_answers_count').val(correct);
+    $('#quiz_result_time_taken_in_seconds').val(totalTime);
+    $('#quiz_result_incorrect_answers').val(incorrect);
+    $('#new_quiz_result').submit();
+  }
+</script>
+
+<form class="form">
+<div class="form-group">
+  <label>Problems count</label>
+  <input class="form-control" type="text" id="count" value="3">
+</div>
+<div class="form-group">
+  <label>Min</label>
+  <input class="form-control" type="text" id="min" value="1">
+</div>
+<div class="form-group">
+  <label>Max</label>
+  <input class="form-control" type="text" id="max" value="9">
+</div>
+</form>
+
+<button onclick="start()" class="btn btn-primary">Start</button>
+
+<div style="display: none;">
+<%= form_for(QuizResult.new) do |f| %>
+  <p>Total questions count</p>
+  <%= f.text_field :total_questions_count %>
+  <p>Correct answers count</p>
+  <%= f.text_field :correct_answers_count %>
+  <p>Time taken (in seconds)</p>
+  <%= f.text_field :time_taken_in_seconds %>
+  <p>Incorrect answers</p>
+  <%= f.text_area :incorrect_answers %>
+  <%= f.submit %>
+<% end %>
+</div>
